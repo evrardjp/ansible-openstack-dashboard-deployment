@@ -41,7 +41,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: horizon_hosts
       roles:
-         - { role: evrardjp.openstack-dashboard-deployment, openstack_dashboard_folder: "/usr/local/lib/python2.7/dist-packages/openstack_dashboard", dashboard_name: "chargeback", dashboard_content_folder: "/etc/openstack_deploy/files/dashboards/chargeback" }
+         - { role: evrardjp.openstack-dashboard-deployment, openstack_dashboard_folder: "/usr/local/lib/python2.7/dist-packages/openstack_dashboard", dashboard_name: "chargeback", openstack_dashboard_content_folder: "/etc/openstack_deploy/files/dashboards/chargeback" }
 
 License
 -------
