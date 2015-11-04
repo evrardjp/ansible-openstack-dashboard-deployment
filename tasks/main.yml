@@ -1,0 +1,32 @@
+---
+# Copyright 2015, Jean-Philippe Evrard <jean-philippe@evrard.me>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# tasks file for ansible-openstack-dashboard-deployment
+- name: Uploading dashboard files
+  synchronize:
+    src: "{{openstack_dashboard_content_folder}}"
+    dest: "{{openstack_dashboard_dashboards_folder}}{{dashboard_name}}"
+
+- name: Wiring the new dashboard into your standard dashboards
+  template:
+    src: custom_dashboard.py.j2
+    dest: "{{openstack_dashboard_enabled_folder}}_50_{{dashboard_name}}.py"
+  when: not openstack_dashboard_use_custom_wiring_file | bool
+
+- name: Dashboard custom wiring
+  copy:
+    src: "{{openstack_dashboard_use_custom_wiring_file_path}}"
+    dest: "{{openstack_dashboard_enabled_folder}}{{openstack_dashboard_use_custom_wiring_file_path|basename}}"
+  when: openstack_dashboard_use_custom_wiring_file | bool
